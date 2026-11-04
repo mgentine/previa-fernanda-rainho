@@ -216,15 +216,24 @@ html:not(.js-site) .so-com-js { display: none !important; }
   .hero__disco { left: 50%; top: 0; margin: 0 0 0 calc(var(--d) / -2); }
 }
 
-/* ---------- Frase com miniaturas ---------- */
-.intro { padding-block: clamp(112px, 20vh, 200px); }
-.intro p { width: min(100%, max(64vw, 620px), 940px); margin-inline: auto; text-align: center; font-family: var(--display); font-weight: 500; font-size: var(--t-frase); line-height: 1.34; }
-.mini { display: inline-block; width: 1.05em; height: 1.05em; border-radius: 50%; overflow: hidden; vertical-align: -0.16em; margin-inline: 0.12em; background: var(--lilas-icone); }
-.mini img { width: 100%; height: 100%; object-fit: cover; }
-@media (max-width: 767px) {
-  .intro { padding-block: 96px; }
-  .intro p { width: 100%; text-align: left; font-size: 1.5rem; line-height: 1.35; }
-  .mini--extra { display: none; }
+/* ---------- A consulta: parágrafo na metade direita, uma foto ---------- */
+.intro { padding-block: clamp(112px, 11vw, 168px); }
+.intro__grade { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
+.intro__texto {
+  grid-column: 7 / 13; grid-row: 1;
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(1.5rem, 0.95rem + 1.15vw, 1.875rem); line-height: 1.3;
+  text-indent: 3em; text-wrap: pretty;
+}
+.intro__foto { grid-column: 1 / 4; grid-row: 2; margin: -2.75rem 0 0; display: grid; gap: 28px; align-content: start; }
+.intro__foto .circulo { width: 100%; max-width: 320px; justify-self: start; }
+.intro__nota { max-width: 15rem; font-size: var(--t-menor); }
+@media (max-width: 1023px) {
+  .intro__grade { grid-template-columns: minmax(0, 1fr); }
+  .intro__texto { grid-column: 1; font-size: 1.375rem; text-indent: 0; }
+  .intro__foto { grid-column: 1; grid-row: 2; margin-top: 40px; grid-template-columns: minmax(0, 1fr) min(52%, 340px); align-items: end; gap: 20px; }
+  .intro__foto .circulo { order: 2; max-width: none; justify-self: end; }
+  .intro__nota { order: 1; max-width: none; }
 }
 
 /* ---------- Exames ao microscópio (objeto sobre o disco) ---------- */
@@ -548,3 +557,6 @@ html:not(.js-site) .mostruario__disco figure:not(:first-of-type) { display: none
 .grupo__foto { margin-top: 32px; }
 .grupo__foto .circulo { width: clamp(160px, 16vw, 220px); justify-self: start; }
 @media (max-width: 1023px) { .grupo__foto { display: none; } }
+
+/* SplitText divide em palavras inline-block: o recuo da primeira linha não pode passar para cada palavra */
+[data-tinta] div { text-indent: 0; }
