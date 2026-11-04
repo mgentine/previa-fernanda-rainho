@@ -71,20 +71,24 @@
     const tocar = () => {
       video.preload = 'auto';
       const p = video.play();
-      if (p && p.catch) p.catch(() => marcar(false));
+      if (p && p.catch) p.catch(() => { if (video.paused) marcar(false); });
     };
     video.addEventListener('playing', () => { video.classList.add('ativo'); marcar(true); });
     video.addEventListener('pause', () => marcar(false));
+    // Se a primeira tentativa foi interrompida (vídeo ainda carregando), tenta de novo quando houver dados.
+    video.addEventListener('canplay', () => { if (video.paused && visivel && !pausadoPelaPessoa) tocar(); });
     pausa.addEventListener('click', () => {
       if (video.paused) { pausadoPelaPessoa = false; tocar(); }
       else { pausadoPelaPessoa = true; video.pause(); }
     });
+    // Observa a seção inteira, e não o vídeo: a cortina de abertura recorta o círculo (clip-path)
+    // e o navegador contaria o vídeo como fora da tela durante a animação.
     if ('IntersectionObserver' in window) {
       new IntersectionObserver((entradas) => {
         visivel = entradas[0].isIntersecting;
         if (!visivel && !video.paused) video.pause();
         else if (visivel && video.paused && !pausadoPelaPessoa) tocar();
-      }, { threshold: 0.15 }).observe(video);
+      }, { threshold: 0.1 }).observe(video.closest('.hero') || video);
     }
     marcar(!pausadoPelaPessoa);
     if (!pausadoPelaPessoa) tocar();
