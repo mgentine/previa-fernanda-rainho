@@ -19,6 +19,7 @@
   --lilas-claro: #E7DFEF;
   --lilas-icone: #D5C7E1;
   --pessego: #D7B6A6;
+  --orquidea: #BA80CC;                  /* só decoração (design system); a maquete 3D lê este token */
 
   /* Funções */
   --texto: var(--roxo-marca);
@@ -299,6 +300,7 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .cuidado__corpo p + p { margin-top: 0; }
 .cuidado__corpo a, .perguntas .resposta a { font-weight: 600; display: inline-block; padding-block: 3px; }
 .cuidados__todos { margin-top: var(--space-8); }
+.cuidados__maquete { margin-top: var(--space-4); }
 .cuidados__palco { position: sticky; top: calc(var(--topo-altura) + 40px); }
 .cuidados__fotos { position: relative; width: 100%; max-width: 480px; margin-left: auto; isolation: isolate; }
 .cuidados__fotos::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--arco); background: var(--lilas-claro); transform: translate(-6%, 5%); }
@@ -558,9 +560,11 @@ figcaption { font-size: var(--t-menor); line-height: 1.5; }
 .erro .circulo { max-width: 340px; justify-self: end; }
 @media (max-width: 899px) { .erro .wrap { grid-template-columns: 1fr; } .erro .circulo { justify-self: start; width: 60%; } }
 
-/* ---------- Compatibilidade com páginas no layout anterior ---------- */
-/* A página "A pele por dentro" foi montada à parte, com o cabeçalho e a chamada antigos. */
+/* ---------- Convivência com a página da maquete 3D ---------- */
+/* maquete.css usa .rotulo e .icone com outro sentido; as regras abaixo isolam o cabeçalho.
+ * As de .chamada > .wrap ficam para páginas montadas no markup anterior. */
 .topo__menu .rotulo { position: static; margin: 0; height: auto; opacity: 1; visibility: visible; font-size: inherit; }
+.topo__menu .rotulo::before { content: none; }  /* a maquete usa .rotulo para os pontos da cena */
 .topo__marca:not(:has(img)) { font: 400 1.5rem/1.1 var(--display); letter-spacing: -0.01em; }
 .chamada > .wrap:has(> .chamada__circulo) { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--space-8) clamp(32px, 4vw, 56px); align-items: center; }
 .chamada > .wrap > .chamada__circulo .moldura { aspect-ratio: 1; border-radius: 50%; overflow: clip; }
