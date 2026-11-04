@@ -1,0 +1,54 @@
+/* movimento.css · sites-premium
+ * Par do movimento.js. Só o que o movimento precisa; a aparência da página vem dos tokens da direção.
+ */
+
+/* Tokens de movimento da Taste (references/motion.md §4), para hover, toque e transições em CSS. */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-ui: 240ms;
+}
+
+/* A primeira tela fica oculta só enquanto o GSAP prepara a entrada: exige JS, movimento permitido
+ * e o movimento.js ainda não pronto. O script do <head> tira a classe .js em 3 s se nada ficar pronto. */
+@media (prefers-reduced-motion: no-preference) {
+  .js:not(.movimento-pronto) [data-hero] { visibility: hidden; }
+}
+
+/* Linhas mascaradas: cada máscara do SplitText recorta a linha. Com entrelinha de título (0,85 a 1,05),
+ * o recorte comeria acentos de maiúsculas (Á, É, Ç) e descendentes (g, j, p, ç). A folga abaixo evita isso
+ * sem mudar o espaçamento visível. */
+[data-linhas] > div { padding-block: 0.14em; margin-block: -0.14em; }
+
+/* Números que rolam: largura fixa por dígito, sem o texto pular. */
+[data-numero] { font-variant-numeric: tabular-nums; }
+
+/* Janela: a moldura recorta; a imagem preenche. */
+[data-janela] { overflow: clip; }
+[data-janela] > img,
+[data-janela] > video,
+[data-janela] > picture > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Paralaxe: a moldura recorta e a imagem tem 8% de sobra para deslizar. A moldura precisa de altura
+ * própria (aspect-ratio ou height), porque a imagem posicionada não a dimensiona. */
+:has(> [data-paralaxe]) { position: relative; overflow: clip; }
+[data-paralaxe] { position: absolute; top: -4%; left: 0; width: 100%; height: 108%; object-fit: cover; will-change: transform; }
+
+/* Retorno sob a mão, em CSS: rápido, pequeno, sem rebote. Só na classe .botao, para não vazar
+ * para o resto do site quando o bloco é colado num construtor. */
+.botao {
+  transition:
+    transform var(--t-press) var(--ease-out),
+    background-color var(--t-hover) ease,
+    color var(--t-hover) ease;
+}
+.botao:active { transform: translateY(1px) scale(0.98); }
+
+@media (prefers-reduced-motion: reduce) {
+  .botao { transition: background-color var(--t-hover) ease, color var(--t-hover) ease; }
+  .botao:active { transform: none; }
+}
