@@ -112,9 +112,9 @@ a:hover { text-decoration-thickness: 2px; }
 html:not(.js-site) .so-com-js { display: none !important; }
 .js-site .so-sem-js { display: none !important; }
 
-/* Ícones de traço: um desenho, o mesmo traço em todos. */
-.icone { display: inline-grid; place-items: center; flex: none; width: 48px; height: 48px; border-radius: 50%; background: var(--lilas-claro); color: var(--roxo-marca); }
-.icone svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+/* Ícones de traço: um desenho, o mesmo traço em todos. Nome próprio para não colidir com a classe dos ícones da página da maquete. */
+.pictograma { display: inline-grid; place-items: center; flex: none; width: 48px; height: 48px; border-radius: 50%; background: var(--lilas-claro); color: var(--roxo-marca); }
+.pictograma svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- Botões ---------- */
 .botao {
@@ -272,7 +272,7 @@ html:not(.js-site) .so-com-js { display: none !important; }
 .sinais__nota svg { flex: none; width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; margin-top: 1px; }
 .sinais__lista { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(36px, 4vw, 56px) clamp(28px, 4vw, 56px); }
 .sinais__lista li { display: grid; gap: var(--space-3); align-content: start; padding-top: var(--space-6); border-top: 1px solid var(--linha); }
-.sinais__lista .icone { background: var(--branco); margin-bottom: var(--space-2); }
+.sinais__lista .pictograma { background: var(--branco); margin-bottom: var(--space-2); }
 .sinais__lista p { max-width: 36ch; }
 @media (max-width: 899px) {
   .sinais .wrap { grid-template-columns: 1fr; }
@@ -557,6 +557,16 @@ figcaption { font-size: var(--t-menor); line-height: 1.5; }
 .erro .wrap > div { display: grid; gap: var(--space-6); }
 .erro .circulo { max-width: 340px; justify-self: end; }
 @media (max-width: 899px) { .erro .wrap { grid-template-columns: 1fr; } .erro .circulo { justify-self: start; width: 60%; } }
+
+/* ---------- Compatibilidade com páginas no layout anterior ---------- */
+/* A página "A pele por dentro" foi montada à parte, com o cabeçalho e a chamada antigos. */
+.topo__menu .rotulo { position: static; margin: 0; height: auto; opacity: 1; visibility: visible; font-size: inherit; }
+.topo__marca:not(:has(img)) { font: 400 1.5rem/1.1 var(--display); letter-spacing: -0.01em; }
+.chamada > .wrap:has(> .chamada__circulo) { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--space-8) clamp(32px, 4vw, 56px); align-items: center; }
+.chamada > .wrap > .chamada__circulo .moldura { aspect-ratio: 1; border-radius: 50%; overflow: clip; }
+.chamada > .wrap > .chamada__circulo img { width: 100%; height: 100%; object-fit: cover; }
+.chamada > .wrap > div > h2 { font-size: clamp(1.875rem, 1.45rem + 1.2vw, 2.5rem); margin-bottom: var(--space-3); }
+@media (max-width: 899px) { .chamada > .wrap:has(> .chamada__circulo) { grid-template-columns: 1fr; justify-items: start; } }
 
 /* ---------- Impressão ---------- */
 @media print {
