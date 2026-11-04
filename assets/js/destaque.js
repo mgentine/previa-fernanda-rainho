@@ -1,6 +1,6 @@
-/* Momento de destaque da home: a foto abre dentro do anel do "microscópio" e,
- * na rolagem, aproxima devagar (zoom preso à barra de rolagem, sem movimento automático).
- * Com movimento reduzido ou sem GSAP, nada acontece e a foto já está no lugar.
+/* Momento de destaque da home: o vídeo (ou o pôster) abre dentro do anel do "microscópio" e,
+ * na rolagem, aproxima devagar (zoom preso à barra de rolagem).
+ * Com movimento reduzido ou sem GSAP, nada acontece e o pôster já está no lugar.
  */
 (() => {
   'use strict';
@@ -11,18 +11,18 @@
   if (!hero) return;
   const foto = hero.querySelector('.hero__foto');
   const zoom = hero.querySelector('.hero__zoom');
-  const img = hero.querySelector('.hero__zoom img');
+  const midia = hero.querySelectorAll('.hero__zoom > img, .hero__zoom > video');
   const disco = hero.querySelector('.hero__disco');
-  if (!foto || !zoom || !img || !disco) return;
+  if (!foto || !zoom || !midia.length || !disco) return;
 
   let mm;
   try {
     mm = gsap.matchMedia();
     mm.add('(prefers-reduced-motion: no-preference)', () => {
-      // Abertura em cortina, de baixo para cima, com a foto assentando de 1,12 para 1.
+      // Abertura em cortina, de baixo para cima, com a imagem assentando de 1,12 para 1.
       const tl = gsap.timeline({ delay: 0.1 });
       tl.fromTo(foto, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath' }, 0)
-        .fromTo(img, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', clearProps: 'transform' }, 0)
+        .fromTo(midia, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', clearProps: 'transform' }, 0)
         .fromTo(disco, { scale: 0.94 }, { scale: 1, duration: 1.2, ease: 'expo.out' }, 0);
 
       // Ken Burns pela rolagem: aproxima 10% enquanto a primeira tela sai.

@@ -1,5 +1,5 @@
 /* Dra. Fernanda Rainho · comportamento do site
- * Menu do celular, exames ao microscópio, calculadora do último banho e formulário que abre o WhatsApp.
+ * Menu do celular, vídeo do hero, exames ao microscópio, calculadora do último banho e formulário que abre o WhatsApp.
  * Sem este arquivo, a página continua legível e os links do WhatsApp funcionam com mensagem padrão.
  */
 (() => {
@@ -51,6 +51,43 @@
     });
     // Se a tela crescer com o menu aberto (celular girado), fecha sem prender a rolagem.
     window.matchMedia('(min-width: 1024px)').addEventListener('change', (m) => { if (m.matches && painel.classList.contains('aberto')) fechar(false); });
+  }
+
+  /* ---------- Vídeo do hero ---------- */
+  // Toca sozinho só sem "movimento reduzido" e sem economia de dados; o botão pausa e retoma.
+  // Fora da tela o vídeo para (bateria e dados) e volta ao reaparecer, se a pessoa não tiver pausado.
+  const video = $('[data-hero-video]');
+  const pausa = $('[data-hero-pausa]');
+  if (video && pausa) {
+    const rotulo = $('.rotulo', pausa);
+    const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const economia = !!(navigator.connection && navigator.connection.saveData);
+    let pausadoPelaPessoa = reduzido || economia;
+    let visivel = true;
+    const marcar = (tocando) => {
+      rotulo.textContent = tocando ? 'Pausar vídeo' : 'Reproduzir vídeo';
+      pausa.classList.toggle('pausado', !tocando);
+    };
+    const tocar = () => {
+      video.preload = 'auto';
+      const p = video.play();
+      if (p && p.catch) p.catch(() => marcar(false));
+    };
+    video.addEventListener('playing', () => { video.classList.add('ativo'); marcar(true); });
+    video.addEventListener('pause', () => marcar(false));
+    pausa.addEventListener('click', () => {
+      if (video.paused) { pausadoPelaPessoa = false; tocar(); }
+      else { pausadoPelaPessoa = true; video.pause(); }
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entradas) => {
+        visivel = entradas[0].isIntersecting;
+        if (!visivel && !video.paused) video.pause();
+        else if (visivel && video.paused && !pausadoPelaPessoa) tocar();
+      }, { threshold: 0.15 }).observe(video);
+    }
+    marcar(!pausadoPelaPessoa);
+    if (!pausadoPelaPessoa) tocar();
   }
 
   /* ---------- Exames ao microscópio ---------- */

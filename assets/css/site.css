@@ -202,8 +202,22 @@ html:not(.js-site) .so-com-js { display: none !important; }
   left: calc(var(--m) + var(--hero-texto) + 40px); top: 52%; margin-top: calc(var(--d) / -2);
 }
 .hero__foto { position: absolute; inset: 6.5%; border-radius: 50%; overflow: hidden; background: var(--lilas-icone); }
-.hero__zoom, .hero__zoom img { width: 100%; height: 100%; }
-.hero__zoom img { object-fit: cover; }
+.hero__zoom { position: relative; width: 100%; height: 100%; }
+.hero__zoom img, .hero__video { width: 100%; height: 100%; object-fit: cover; }
+.hero__video { position: absolute; inset: 0; opacity: 0; transition: opacity 320ms ease; }
+.hero__video.ativo { opacity: 1; }
+/* Pausa do vídeo (WCAG 2.2.2): sobre o anel, no ponto de 225 graus do disco. */
+.hero__pausa {
+  position: absolute; z-index: 2; left: 14.64%; top: 85.36%; transform: translate(-50%, -50%);
+  width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--branco);
+  background: var(--roxo-marca); color: var(--branco); display: grid; place-items: center; cursor: pointer;
+  transition: background-color 200ms ease;
+}
+.hero__pausa:hover { background: #5E4769; }
+/* Anel duplo: o branco contrasta com o lilás do disco e o roxo com o fundo claro da página. */
+.hero__pausa:focus-visible { outline: 3px solid var(--branco); outline-offset: 0; box-shadow: 0 0 0 6px var(--roxo-marca); }
+.hero__icone { width: 14px; height: 16px; border-inline: 5px solid currentColor; box-sizing: border-box; }
+.hero__pausa.pausado .hero__icone { width: 0; height: 0; border-style: solid; border-width: 8px 0 8px 14px; border-color: transparent transparent transparent currentColor; margin-left: 4px; }
 
 @media (max-width: 1023px) {
   .hero { display: block; min-height: 0; --d: min(128vw, 760px); }
@@ -214,6 +228,8 @@ html:not(.js-site) .so-com-js { display: none !important; }
   .hero__credencial { margin-top: 24px; }
   .hero__palco { position: relative; height: calc(var(--d) * 0.8); }
   .hero__disco { left: 50%; top: 0; margin: 0 0 0 calc(var(--d) / -2); }
+  /* No celular o disco passa da largura da tela: o botão fica no canto inferior direito visível. */
+  .hero__pausa { left: min(calc(50% + 50vw - 64px), calc(100% - 64px)); top: calc(80% - 64px); transform: none; }
 }
 
 /* ---------- A consulta: parágrafo na metade direita, uma foto ---------- */
