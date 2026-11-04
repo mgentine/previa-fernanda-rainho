@@ -1,5 +1,5 @@
 /* Dra. Fernanda Rainho · comportamento do site
- * Menu do celular, vídeo do hero, exames ao microscópio, calculadora do último banho e formulário que abre o WhatsApp.
+ * Menu do celular, fio do cabeçalho, acordeão dos cuidados, calculadora do último banho e formulário que abre o WhatsApp.
  * Sem este arquivo, a página continua legível e os links do WhatsApp funcionam com mensagem padrão.
  */
 (() => {
@@ -53,60 +53,30 @@
     window.matchMedia('(min-width: 1024px)').addEventListener('change', (m) => { if (m.matches && painel.classList.contains('aberto')) fechar(false); });
   }
 
-  /* ---------- Vídeo do hero ---------- */
-  // Toca sozinho só sem "movimento reduzido" e sem economia de dados; o botão pausa e retoma.
-  // Fora da tela o vídeo para (bateria e dados) e volta ao reaparecer, se a pessoa não tiver pausado.
-  const video = $('[data-hero-video]');
-  const pausa = $('[data-hero-pausa]');
-  if (video && pausa) {
-    const rotulo = $('.rotulo', pausa);
-    const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const economia = !!(navigator.connection && navigator.connection.saveData);
-    let pausadoPelaPessoa = reduzido || economia;
-    let visivel = true;
-    const marcar = (tocando) => {
-      rotulo.textContent = tocando ? 'Pausar vídeo' : 'Reproduzir vídeo';
-      pausa.classList.toggle('pausado', !tocando);
-    };
-    const tocar = () => {
-      video.preload = 'auto';
-      const p = video.play();
-      if (p && p.catch) p.catch(() => { if (video.paused) marcar(false); });
-    };
-    video.addEventListener('playing', () => { video.classList.add('ativo'); marcar(true); });
-    video.addEventListener('pause', () => marcar(false));
-    // Se a primeira tentativa foi interrompida (vídeo ainda carregando), tenta de novo quando houver dados.
-    video.addEventListener('canplay', () => { if (video.paused && visivel && !pausadoPelaPessoa) tocar(); });
-    pausa.addEventListener('click', () => {
-      if (video.paused) { pausadoPelaPessoa = false; tocar(); }
-      else { pausadoPelaPessoa = true; video.pause(); }
-    });
-    // Observa a seção inteira, e não o vídeo: a cortina de abertura recorta o círculo (clip-path)
-    // e o navegador contaria o vídeo como fora da tela durante a animação.
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver((entradas) => {
-        visivel = entradas[0].isIntersecting;
-        if (!visivel && !video.paused) video.pause();
-        else if (visivel && video.paused && !pausadoPelaPessoa) tocar();
-      }, { threshold: 0.1 }).observe(video.closest('.hero') || video);
-    }
-    marcar(!pausadoPelaPessoa);
-    if (!pausadoPelaPessoa) tocar();
+  /* ---------- Fio do cabeçalho ao rolar ---------- */
+  if (topo) {
+    const marcarRolagem = () => topo.classList.toggle('rolou', window.scrollY > 8);
+    window.addEventListener('scroll', marcarRolagem, { passive: true });
+    marcarRolagem();
   }
 
-  /* ---------- Exames ao microscópio ---------- */
-  $$('[data-mostruario]').forEach((bloco) => {
-    const botoes = $$('[data-item]', bloco);
-    const disco = $('.mostruario__disco', bloco);
-    const escolher = (id) => {
-      botoes.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.item === id)));
-      $$('[data-figura]', bloco).forEach((f) => f.classList.toggle('ativo', f.dataset.figura === id));
-      $$('[data-fato]', bloco).forEach((f) => f.classList.toggle('ativo', f.dataset.fato === id));
-      const ativo = botoes.find((b) => b.dataset.item === id);
-      if (disco && ativo) disco.dataset.cor = ativo.dataset.cor || '';
-    };
-    botoes.forEach((b) => b.addEventListener('click', () => escolher(b.dataset.item)));
-    if (botoes[0]) escolher(botoes[0].dataset.item);
+  /* ---------- Cuidados: a foto acompanha o item aberto ---------- */
+  // O acordeão é <details name="cuidados">, exclusivo por natureza nos navegadores atuais.
+  // Nos antigos, o script fecha os outros itens. Sem script, todos abrem e a primeira foto fica.
+  const detailsTemNome = 'name' in document.createElement('details');
+  $$('[data-cuidados]').forEach((bloco) => {
+    const itens = $$('details[data-foto]', bloco);
+    const fotos = $$('figure[data-foto]', bloco);
+    const mostrar = (id) => fotos.forEach((f) => {
+      const ativa = f.dataset.foto === id;
+      f.classList.toggle('ativo', ativa);
+      if (ativa) f.removeAttribute('aria-hidden'); else f.setAttribute('aria-hidden', 'true');
+    });
+    itens.forEach((d) => d.addEventListener('toggle', () => {
+      if (!d.open) return;
+      mostrar(d.dataset.foto);
+      if (!detailsTemNome) itens.forEach((o) => { if (o !== d) o.open = false; });
+    }));
   });
 
   /* ---------- Calculadora do último banho ---------- */
