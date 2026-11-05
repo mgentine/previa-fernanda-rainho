@@ -10,8 +10,8 @@
 <script>(function(r){r.classList.add('js');setTimeout(function(){if(!r.classList.contains('movimento-pronto'))r.classList.remove('js')},3000)})(document.documentElement)</script>
 <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/figtree-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=11">
-<link rel="stylesheet" href="assets/css/movimento.css?v=11">
+<link rel="stylesheet" href="assets/css/site.css?v=12">
+<link rel="stylesheet" href="assets/css/movimento.css?v=12">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -199,10 +199,14 @@
   <div class="wrap">
     <div class="cabeca cabeca--dupla">
       <h2 id="titulo-depoimentos" data-parte>O que dizem os tutores</h2>
-      <p data-parte>Avaliações deixadas no perfil da Dra. Fernanda no Google, sem edição.</p>
+      <div class="nota-google" data-parte>
+        <p class="nota-google__numero" aria-hidden="true">5,0</p>
+        <p class="nota-google__estrelas"><svg class="estrelas" viewBox="0 0 120 24" role="img" aria-label="Nota 5,0 de 5 no Google" focusable="false"><path transform="translate(0 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(24 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(48 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(72 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(96 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/></svg></p>
+        <p class="nota-google__total"><a class="link-forte" href="https://maps.google.com/?cid=3101955840004820351" target="_blank" rel="noopener">Ler as 13 avaliações no Google</a></p>
+      </div>
     </div>
-    <ul class="depoimentos__lista"><li class="depoimento" data-parte><blockquote><p>“Profissional maravilhosa, atenciosa e cuidadosa. Muito paciente para tirar as dúvidas e explicar com clareza!”</p></blockquote><p class="depoimento__quem"><strong>Beatriz Fernanda Silva</strong><span>Avaliação no Google</span></p></li><li class="depoimento" data-parte><blockquote><p>“Excelente profissional! A Fernanda é muito atenciosa, dedicada e ama o que faz. O consultório é organizado e a experiência foi ótima. Recomendo fortemente!”</p></blockquote><p class="depoimento__quem"><strong>Mauro Matsukawa</strong><span>Avaliação no Google</span></p></li><li class="depoimento" data-parte><blockquote><p>“Uma excelente profissional e me atendeu rapidamente e ajudou a cuidar do meu pet com muito amor e carinho. Super recomendo”</p></blockquote><p class="depoimento__quem"><strong>Jorge Vedelago</strong><span>Avaliação no Google</span></p></li></ul>
-    <p class="depoimentos__link" data-parte><a class="link-forte" href="https://maps.google.com/?cid=3101955840004820351" target="_blank" rel="noopener">Ler todas as avaliações no Google</a></p>
+    <ul class="depoimentos__lista"><li class="depoimento" data-parte><div class="depoimento__texto"><svg class="estrelas depoimento__estrelas" viewBox="0 0 120 24" role="img" aria-label="5 de 5 estrelas" focusable="false"><path transform="translate(0 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(24 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(48 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(72 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(96 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/></svg><blockquote><p>“Excelente profissional! A Fernanda é muito atenciosa, dedicada e ama o que faz. O consultório é organizado e a experiência foi ótima. Recomendo fortemente!”</p></blockquote></div><p class="depoimento__quem"><strong>Mauro Matsukawa</strong><span>Avaliação no Google</span></p></li><li class="depoimento" data-parte><div class="depoimento__texto"><svg class="estrelas depoimento__estrelas" viewBox="0 0 120 24" role="img" aria-label="5 de 5 estrelas" focusable="false"><path transform="translate(0 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(24 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(48 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(72 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(96 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/></svg><blockquote><p>“Profissional maravilhosa, atenciosa e cuidadosa. Muito paciente para tirar as dúvidas e explicar com clareza !!!!”</p></blockquote></div><p class="depoimento__quem"><strong>Beatriz Fernanda Silva</strong><span>Avaliação no Google</span></p></li><li class="depoimento" data-parte><div class="depoimento__texto"><svg class="estrelas depoimento__estrelas" viewBox="0 0 120 24" role="img" aria-label="5 de 5 estrelas" focusable="false"><path transform="translate(0 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(24 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(48 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(72 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/><path transform="translate(96 0)" d="M12 2.6l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.6l-5.87 3.08 1.12-6.54L2.5 9.51l6.56-.95z"/></svg><blockquote><p>“Uma excelente profissional e me atendeu rapidamente e ajudou a cuidar do meu pet com muito amor e carinho. Super recomendo”</p></blockquote></div><p class="depoimento__quem"><strong>Jorge Vedelago</strong><span>Avaliação no Google</span></p></li></ul>
+    <p class="depoimentos__nota" data-parte>Nota e avaliações conferidas no perfil da Dra. Fernanda no Google em novembro de 2026, reproduzidas como foram escritas.</p>
   </div>
 </section>
 
@@ -293,7 +297,7 @@
 <script defer src="assets/js/vendor/gsap.min.js"></script>
 <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
 <script defer src="assets/js/vendor/SplitText.min.js"></script>
-<script defer src="assets/js/movimento.js?v=11"></script>
-<script defer src="assets/js/site.js?v=11"></script>
+<script defer src="assets/js/movimento.js?v=12"></script>
+<script defer src="assets/js/site.js?v=12"></script>
 </body>
 </html>

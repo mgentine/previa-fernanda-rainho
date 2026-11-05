@@ -438,7 +438,19 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .depoimento blockquote p { font: 400 1.3125rem/1.4 var(--display); }
 .depoimento p.depoimento__quem { display: grid; gap: 2px; font-size: var(--t-menor); }
 .depoimento__quem strong { font-size: 1rem; }
-.depoimentos__link { margin-top: var(--space-8); }
+.depoimento__texto { display: grid; gap: var(--space-3); justify-items: start; }
+/* Estrelas: cinco cheias em SVG, na cor do texto; a nota vem dita no rótulo para leitor de tela. */
+.estrelas { display: block; height: 1rem; width: auto; aspect-ratio: 5 / 1; fill: var(--texto); }
+.depoimento__estrelas { height: 15px; }
+.depoimento:first-child .depoimento__estrelas { height: 20px; }
+/* Nota do Google no alto da seção */
+.nota-google { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: clamp(16px, 1.8vw, 24px); row-gap: 6px; }
+.cabeca .nota-google p { max-width: none; font-size: var(--t-corpo); }
+.cabeca .nota-google .nota-google__numero { grid-row: 1 / 3; font: 400 clamp(3.5rem, 2.9rem + 1.5vw, 4.75rem)/0.82 var(--display); letter-spacing: -0.03em; font-variant-numeric: lining-nums; }
+.nota-google__estrelas { align-self: end; }
+.nota-google__estrelas .estrelas { height: 24px; }
+.nota-google__total { align-self: start; }
+.depoimentos__nota { margin-top: var(--space-6); font-size: var(--t-menor); }
 @media (max-width: 1023px) { .depoimentos__lista { grid-template-columns: 1fr; max-width: 640px; } .depoimento:first-child { grid-row: auto; } .depoimento:first-child blockquote p { font-size: var(--t-h3); } }
 /* Computador: título, avaliações e link cabem numa tela. O conjunto ocupa 90% da altura livre abaixo do
  * cabeçalho, como o bloco das etapas, e os espaços crescem com a altura da janela. */
@@ -451,15 +463,17 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
   @supports (height: 100svh) {
     .depoimentos .wrap { min-height: calc((100svh - var(--topo-altura)) * 0.9); }
   }
-  .depoimentos .cabeca { margin-bottom: 0; }
+  /* a nota do Google começa na mesma linha vertical da coluna da direita dos cartões */
+  .depoimentos .cabeca { margin-bottom: 0; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); column-gap: clamp(20px, 2.4vw, 32px); }
   .depoimentos__lista { flex: 1; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: clamp(16px, 3vh, 32px) clamp(20px, 2.4vw, 32px); }
   .depoimento { padding-block: clamp(20px, 3.8vh, 44px); gap: clamp(12px, 2.6vh, 32px); }
   /* em telas altas as citações crescem para ocupar os cartões, em vez de deixar um vão no meio */
-  .depoimento blockquote p { font-size: clamp(1.3125rem, 2.6vh, 1.5rem); }
+  .depoimento blockquote p { font-size: clamp(1.1875rem, 9.3px + 1.48vh, 1.5rem); }
+  .depoimento__texto { gap: clamp(8px, 1.4vh, 14px); }
   .depoimento:first-child blockquote p { font-size: clamp(1.5rem, max(1.2rem + 0.9vw, 3.8vh), 2.375rem); }
   /* nome e origem na mesma linha */
   .depoimento p.depoimento__quem { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
-  .depoimentos__link { margin-top: 0; }
+  .depoimentos__nota { margin-top: 0; }
 }
 
 /* ---------- Perguntas ---------- */
@@ -573,6 +587,7 @@ figcaption { font-size: var(--t-menor); line-height: 1.5; }
 .citacoes blockquote { margin: 0 0 var(--space-3); }
 .citacoes blockquote p { font: 400 1.25rem/1.4 var(--display); }
 .citacoes li > p { font-size: var(--t-menor); font-weight: 600; }
+.citacoes__estrelas { height: 14px; margin-bottom: var(--space-3); }
 
 .lateral { position: sticky; top: calc(var(--topo-altura) + 32px); display: grid; gap: var(--space-6); padding: clamp(28px, 3vw, 36px); background: var(--fundo); border-radius: var(--radius-lg); }
 .lateral h2 { font-size: var(--t-h3); }
