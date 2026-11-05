@@ -410,11 +410,20 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .percurso .banho { margin-top: clamp(28px, 3.5vw, 48px); padding: clamp(20px, 2.6vw, 32px) clamp(20px, 3vw, 40px); gap: var(--space-6) clamp(28px, 4vw, 64px); }
 .percurso .banho__texto { gap: var(--space-2); }
 .percurso .banho__form { gap: var(--space-2); }
-/* Computador: espaços do bloco das etapas acompanham a altura da janela, para ele caber inteiro na tela */
+/* Computador: o bloco das etapas ocupa 90% da altura livre abaixo do cabeçalho (sobra 5% de branco em
+ * cima e 5% embaixo quando ele está na tela) e os espaços internos crescem com a altura da janela. */
 @media (min-width: 900px) {
-  .percurso__bloco { padding-block: clamp(24px, 5vh, 64px); }
-  .percurso .cabeca { margin-bottom: clamp(20px, 4vh, 48px); }
-  .percurso .banho { margin-top: clamp(20px, 4vh, 48px); padding-block: clamp(18px, 3vh, 32px); }
+  .percurso__bloco {
+    display: flex; flex-direction: column; justify-content: center;
+    gap: clamp(16px, 4.4vh, 64px);
+    min-height: calc((100vh - var(--topo-altura)) * 0.9);
+    padding-block: clamp(24px, 4.8vh, 80px);
+  }
+  @supports (height: 100svh) {
+    .percurso__bloco { min-height: calc((100svh - var(--topo-altura)) * 0.9); }
+  }
+  .percurso .cabeca { margin-bottom: 0; }
+  .percurso .banho { margin-top: 0; padding-block: clamp(16px, 3vh, 40px); }
 }
 .banho__resultado strong { display: block; font: 400 1.3125rem/1.3 var(--display); margin-bottom: 4px; }
 @media (max-width: 899px) { .banho { grid-template-columns: 1fr; } }
