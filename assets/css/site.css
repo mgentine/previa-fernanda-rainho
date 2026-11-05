@@ -440,6 +440,27 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .depoimento__quem strong { font-size: 1rem; }
 .depoimentos__link { margin-top: var(--space-8); }
 @media (max-width: 1023px) { .depoimentos__lista { grid-template-columns: 1fr; max-width: 640px; } .depoimento:first-child { grid-row: auto; } .depoimento:first-child blockquote p { font-size: var(--t-h3); } }
+/* Computador: título, avaliações e link cabem numa tela. O conjunto ocupa 90% da altura livre abaixo do
+ * cabeçalho, como o bloco das etapas, e os espaços crescem com a altura da janela. */
+@media (min-width: 1024px) {
+  .depoimentos .wrap {
+    display: flex; flex-direction: column;
+    gap: clamp(16px, 3.4vh, 48px);
+    min-height: calc((100vh - var(--topo-altura)) * 0.9);
+  }
+  @supports (height: 100svh) {
+    .depoimentos .wrap { min-height: calc((100svh - var(--topo-altura)) * 0.9); }
+  }
+  .depoimentos .cabeca { margin-bottom: 0; }
+  .depoimentos__lista { flex: 1; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: clamp(16px, 3vh, 32px) clamp(20px, 2.4vw, 32px); }
+  .depoimento { padding-block: clamp(20px, 3.8vh, 44px); gap: clamp(12px, 2.6vh, 32px); }
+  /* em telas altas as citações crescem para ocupar os cartões, em vez de deixar um vão no meio */
+  .depoimento blockquote p { font-size: clamp(1.3125rem, 2.6vh, 1.5rem); }
+  .depoimento:first-child blockquote p { font-size: clamp(1.5rem, max(1.2rem + 0.9vw, 3.8vh), 2.375rem); }
+  /* nome e origem na mesma linha */
+  .depoimento p.depoimento__quem { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+  .depoimentos__link { margin-top: 0; }
+}
 
 /* ---------- Perguntas ---------- */
 .duvidas-home .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 7vw, 120px); align-items: start; }
