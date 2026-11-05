@@ -13,9 +13,11 @@
   --t-ui: 240ms;
 }
 
-/* A primeira tela fica oculta só enquanto o GSAP prepara a entrada: exige JS, movimento permitido
- * e o movimento.js ainda não pronto. O script do <head> tira a classe .js em 3 s se nada ficar pronto. */
-@media (prefers-reduced-motion: no-preference) {
+/* A primeira tela fica oculta só enquanto o GSAP prepara a entrada: exige JS, movimento permitido,
+ * tela de computador e o movimento.js ainda não pronto. O script do <head> tira a classe .js em 3 s se
+ * nada ficar pronto. No celular a primeira tela aparece sem entrada: esconder o título e a foto até o
+ * script chegar atrasava o maior elemento da tela (LCP) em rede móvel. */
+@media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
   .js:not(.movimento-pronto) [data-hero] { visibility: hidden; }
 }
 

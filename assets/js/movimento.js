@@ -105,7 +105,8 @@
       const seletorPartes = temSplit ? '[data-parte]' : '[data-parte], [data-linhas]';
 
       // 1. Primeira tela: título em linhas, depois as partes. Tudo termina em cerca de 1,2 s.
-      const hero = document.querySelector('[data-hero]');
+      // Só no computador: no celular a primeira tela já aparece pronta (ver movimento.css).
+      const hero = window.matchMedia('(min-width: 900px)').matches ? document.querySelector('[data-hero]') : null;
       if (hero) {
         const titulos = temSplit ? todos('[data-linhas]', hero) : [];
         titulos.forEach((t) => linhasMascaradas(t, false, 0.05));
