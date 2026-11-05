@@ -384,11 +384,15 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 }
 
 /* ---------- Percurso (etapas da consulta) ---------- */
-.percurso__bloco { background: var(--lilas-claro); border-radius: var(--radius-lg); padding: clamp(36px, 6vw, 96px) clamp(24px, 6vw, 96px); }
-.percurso .cabeca { margin-bottom: clamp(40px, 5vw, 64px); }
+.percurso__bloco { background: var(--lilas-claro); border-radius: var(--radius-lg); padding: clamp(28px, 4.5vw, 64px) clamp(24px, 5vw, 80px); }
+.percurso .cabeca { max-width: none; gap: var(--space-3); margin-bottom: clamp(28px, 3.5vw, 48px); }
+.percurso .cabeca p { max-width: none; }
 .etapas { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(32px, 4vw, 56px); counter-reset: etapa; }
-.etapas li { display: grid; gap: var(--space-3); align-content: start; counter-increment: etapa; }
-.etapas li::before { content: counter(etapa); font: 400 clamp(2.75rem, 2rem + 2vw, 4rem)/1 var(--display); letter-spacing: -0.02em; font-variant-numeric: lining-nums; margin-bottom: var(--space-4); }
+/* número da etapa na mesma linha do título, para o bloco caber numa tela */
+.etapas li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-2) 14px; align-items: baseline; align-content: start; counter-increment: etapa; }
+.etapas li::before { content: counter(etapa); font: 400 clamp(2rem, 1.5rem + 1vw, 2.5rem)/1 var(--display); letter-spacing: -0.02em; font-variant-numeric: lining-nums; }
+.etapas li h3 { grid-column: 2; }
+.etapas li p { grid-column: 1 / -1; }
 .etapas p { max-width: 36ch; }
 @media (max-width: 899px) { .etapas { grid-template-columns: 1fr; } }
 
@@ -402,6 +406,16 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .banho__linha { display: flex; gap: var(--space-3); flex-wrap: wrap; }
 .banho__linha .campo { flex: 1 1 200px; }
 .banho__resultado { min-height: 3.2em; font-size: var(--t-menor); }
+.banho__aviso { font-size: var(--t-menor); }
+.percurso .banho { margin-top: clamp(28px, 3.5vw, 48px); padding: clamp(20px, 2.6vw, 32px) clamp(20px, 3vw, 40px); gap: var(--space-6) clamp(28px, 4vw, 64px); }
+.percurso .banho__texto { gap: var(--space-2); }
+.percurso .banho__form { gap: var(--space-2); }
+/* Computador: espaços do bloco das etapas acompanham a altura da janela, para ele caber inteiro na tela */
+@media (min-width: 900px) {
+  .percurso__bloco { padding-block: clamp(24px, 5vh, 64px); }
+  .percurso .cabeca { margin-bottom: clamp(20px, 4vh, 48px); }
+  .percurso .banho { margin-top: clamp(20px, 4vh, 48px); padding-block: clamp(18px, 3vh, 32px); }
+}
 .banho__resultado strong { display: block; font: 400 1.3125rem/1.3 var(--display); margin-bottom: 4px; }
 @media (max-width: 899px) { .banho { grid-template-columns: 1fr; } }
 .texto .banho { grid-template-columns: 1fr; background: var(--branco); border: 1px solid var(--linha); margin-block: var(--space-12); }
