@@ -430,19 +430,34 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .texto .banho { grid-template-columns: 1fr; background: var(--branco); border: 1px solid var(--linha); margin-block: var(--space-12); }
 
 /* ---------- Depoimentos ---------- */
+/* Três cartões fixos. Dentro de cada um, uma avaliação por grupo, empilhadas na mesma célula: o cartão
+ * fica com a altura da maior e nada pula quando o grupo troca. Sem script, só o primeiro grupo aparece. */
 .depoimentos__lista { list-style: none; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(20px, 2.4vw, 32px); }
-.depoimento:first-child { grid-row: span 2; background: var(--lilas-claro); justify-content: center; }
-.depoimento:first-child blockquote p { font-size: clamp(1.5rem, 1.2rem + 0.9vw, 2rem); line-height: 1.32; }
-.depoimento { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-8); padding: clamp(28px, 3vw, 40px); background: var(--fundo); border-radius: var(--radius-md); }
+.depoimento { display: grid; padding: clamp(28px, 3vw, 40px); background: var(--fundo); border-radius: var(--radius-md); }
+.depoimento[data-pos="1"] { grid-row: span 2; background: var(--lilas-claro); }
+.depoimento__item { grid-area: 1 / 1; display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-8); }
+.depoimento[data-pos="1"] .depoimento__item { justify-content: center; }
+.depoimento__item:not([data-pagina="1"]) { display: none; }
 .depoimento blockquote { margin: 0; }
 .depoimento blockquote p { font: 400 1.3125rem/1.4 var(--display); }
+.depoimento[data-pos="1"] blockquote p { font-size: clamp(1.5rem, 1.2rem + 0.9vw, 2rem); line-height: 1.32; }
 .depoimento p.depoimento__quem { display: grid; gap: 2px; font-size: var(--t-menor); }
 .depoimento__quem strong { font-size: 1rem; }
 .depoimento__texto { display: grid; gap: var(--space-3); justify-items: start; }
 /* Estrelas: cinco cheias em SVG, na cor do texto; a nota vem dita no rótulo para leitor de tela. */
 .estrelas { display: block; height: 1rem; width: auto; aspect-ratio: 5 / 1; fill: var(--texto); }
 .depoimento__estrelas { height: 15px; }
-.depoimento:first-child .depoimento__estrelas { height: 20px; }
+.depoimento[data-pos="1"] .depoimento__estrelas { height: 20px; }
+
+/* Troca automática (site.js liga com .carrossel--ativo). A avaliação que sai some primeiro e a que entra
+ * aparece em seguida, cartão a cartão; o fundo do cartão não pisca. */
+.carrossel--ativo .depoimento__item { display: flex; transition: opacity 0.35s ease, visibility 0s linear 0.35s; }
+.carrossel--ativo .depoimento__item:not(.atual) { opacity: 0; visibility: hidden; }
+.carrossel--ativo .depoimento__item.atual { transition: opacity 0.55s ease 0.35s, visibility 0s; }
+.carrossel--ativo [data-pos="2"] .depoimento__item.atual { transition-delay: 0.47s, 0s; }
+.carrossel--ativo [data-pos="3"] .depoimento__item.atual { transition-delay: 0.59s, 0s; }
+@media (prefers-reduced-motion: reduce) { .carrossel--ativo .depoimento__item, .carrossel--ativo .depoimento__item.atual { transition: none; } }
+
 /* Nota do Google no alto da seção */
 .nota-google { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: clamp(16px, 1.8vw, 24px); row-gap: 6px; }
 .cabeca .nota-google p { max-width: none; font-size: var(--t-corpo); }
@@ -450,9 +465,39 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .nota-google__estrelas { align-self: end; }
 .nota-google__estrelas .estrelas { height: 24px; }
 .nota-google__total { align-self: start; }
-.depoimentos__nota { margin-top: var(--space-6); font-size: var(--t-menor); }
-@media (max-width: 1023px) { .depoimentos__lista { grid-template-columns: 1fr; max-width: 640px; } .depoimento:first-child { grid-row: auto; } .depoimento:first-child blockquote p { font-size: var(--t-h3); } }
-/* Computador: título, avaliações e link cabem numa tela. O conjunto ocupa 90% da altura livre abaixo do
+
+/* Rodapé da seção: a nota de conferência e os controles da troca */
+.depoimentos__rodape { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-6); margin-top: var(--space-6); }
+.depoimentos__nota { flex: 1 1 320px; font-size: var(--t-menor); }
+.carrossel { display: flex; align-items: center; gap: var(--space-2); }
+.carrossel[hidden] { display: none; }
+.carrossel__botao, .carrossel__pausa {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-width: 44px; height: 44px; padding: 0; border: 1.5px solid var(--lilas-icone); border-radius: 999px;
+  background: var(--branco); color: var(--texto); font: 600 var(--t-menor)/1 var(--sans); cursor: pointer;
+  transition: border-color var(--t-hover, 0.2s) ease, background-color var(--t-hover, 0.2s) ease;
+}
+.carrossel__pausa { padding-inline: 16px 18px; }
+.carrossel__botao:hover, .carrossel__pausa:hover { border-color: var(--texto); background: var(--fundo); }
+.carrossel__botao:focus-visible, .carrossel__pausa:focus-visible { outline: 2px solid var(--texto); outline-offset: 2px; }
+.carrossel svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.carrossel .icone-tocar { fill: currentColor; stroke: none; display: none; }
+.carrossel--parado .icone-pausa { display: none; }
+.carrossel--parado .icone-tocar { display: inline; }
+.carrossel__contador { display: grid; justify-items: center; gap: 6px; min-width: 64px; font-size: var(--t-menor); font-variant-numeric: tabular-nums; }
+/* barra que enche até a próxima troca; parada quando a troca está pausada */
+.carrossel__tempo { position: relative; width: 48px; height: 3px; border-radius: 3px; background: var(--lilas-icone); overflow: hidden; }
+.carrossel__tempo > span { position: absolute; inset: 0; background: var(--texto); transform-origin: left center; transform: scaleX(0); }
+.carrossel__tempo > span.correr { animation: carrossel-tempo 12s linear forwards; }
+@keyframes carrossel-tempo { to { transform: scaleX(1); } }
+
+@media (max-width: 1023px) {
+  .depoimentos__lista { grid-template-columns: 1fr; max-width: 640px; }
+  .depoimento[data-pos="1"] { grid-row: auto; }
+  .depoimento[data-pos="1"] blockquote p { font-size: var(--t-h3); }
+  .depoimentos__rodape { max-width: 640px; }
+}
+/* Computador: título, avaliações e rodapé cabem numa tela. O conjunto ocupa 90% da altura livre abaixo do
  * cabeçalho, como o bloco das etapas, e os espaços crescem com a altura da janela. */
 @media (min-width: 1024px) {
   .depoimentos .wrap {
@@ -466,14 +511,16 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
   /* a nota do Google começa na mesma linha vertical da coluna da direita dos cartões */
   .depoimentos .cabeca { margin-bottom: 0; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); column-gap: clamp(20px, 2.4vw, 32px); }
   .depoimentos__lista { flex: 1; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: clamp(16px, 3vh, 32px) clamp(20px, 2.4vw, 32px); }
-  .depoimento { padding-block: clamp(20px, 3.8vh, 44px); gap: clamp(12px, 2.6vh, 32px); }
+  .depoimento { padding-block: clamp(20px, 3.8vh, 44px); }
+  .depoimento__item { gap: clamp(12px, 2.6vh, 32px); }
   /* em telas altas as citações crescem para ocupar os cartões, em vez de deixar um vão no meio */
   .depoimento blockquote p { font-size: clamp(1.1875rem, 9.3px + 1.48vh, 1.5rem); }
   .depoimento__texto { gap: clamp(8px, 1.4vh, 14px); }
-  .depoimento:first-child blockquote p { font-size: clamp(1.5rem, max(1.2rem + 0.9vw, 3.8vh), 2.375rem); }
+  .depoimento[data-pos="1"] blockquote p { font-size: clamp(1.5rem, max(1.2rem + 0.9vw, 3.8vh), 2.375rem); }
   /* nome e origem na mesma linha */
   .depoimento p.depoimento__quem { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
-  .depoimentos__nota { margin-top: 0; }
+  .depoimentos__rodape { margin-top: 0; }
+  .carrossel__botao, .carrossel__pausa { height: 40px; min-width: 40px; }
 }
 
 /* ---------- Perguntas ---------- */

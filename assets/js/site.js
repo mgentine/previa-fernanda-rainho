@@ -150,4 +150,76 @@
       link.remove();
     });
   });
+
+  /* ---------- Avaliações que alternam sozinhas ---------- */
+  // Troca o grupo de avaliações a cada TEMPO. Para com o botão Pausar e, enquanto durar, com o ponteiro
+  // ou o foco sobre elas, com a seção fora da tela e com a aba escondida (WCAG 2.2.2).
+  // Com "reduzir movimento" ligado, começa parada e troca só pelos botões. Sem script, fica o primeiro grupo.
+  const lista = $('[data-carrossel]');
+  const ctrl = $('[data-carrossel-controles]');
+  if (lista && ctrl) {
+    const TEMPO = 12000; // ms por grupo: tempo de ler as três avaliações
+    const itens = $$('[data-pagina]', lista);
+    const paginas = [...new Set(itens.map((el) => el.dataset.pagina))];
+    const contador = $('[data-contador]', ctrl);
+    const barra = $('[data-tempo]', ctrl);
+    const botaoPausa = $('[data-pausa]', ctrl);
+    const rotuloPausa = $('span', botaoPausa);
+    const reduz = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const area = lista.closest('section') || lista;
+    const motivos = new Set(['fora']); // o que segura a troca neste momento
+    let ligado = !reduz.matches;        // escolha do visitante (botão)
+    let atual = 0;
+
+    if (paginas.length > 1 && contador && barra && botaoPausa) {
+      barra.style.animationDuration = TEMPO + 'ms';
+
+      const atualizar = () => {
+        barra.style.animationPlayState = ligado && motivos.size === 0 ? 'running' : 'paused';
+        ctrl.classList.toggle('carrossel--parado', !ligado);
+        rotuloPausa.textContent = ligado ? 'Pausar' : 'Reproduzir';
+        botaoPausa.setAttribute('aria-label', ligado ? 'Pausar a troca das avaliações' : 'Reproduzir a troca das avaliações');
+        // Leitor de tela: anuncia a troca só quando o visitante pede, não a cada passagem automática.
+        lista.setAttribute('aria-live', ligado ? 'off' : 'polite');
+      };
+      const reiniciarBarra = () => {
+        barra.classList.remove('correr');
+        void barra.offsetWidth; // reinicia a animação da barra
+        if (ligado) barra.classList.add('correr');
+        atualizar();
+      };
+      const mostrar = (i) => {
+        atual = (i + paginas.length) % paginas.length;
+        itens.forEach((el) => el.classList.toggle('atual', el.dataset.pagina === paginas[atual]));
+        contador.textContent = `${atual + 1} de ${paginas.length}`;
+        reiniciarBarra();
+      };
+      const segurar = (motivo, sim) => { sim ? motivos.add(motivo) : motivos.delete(motivo); atualizar(); };
+
+      barra.addEventListener('animationend', () => mostrar(atual + 1));
+      $('[data-anterior]', ctrl).addEventListener('click', () => mostrar(atual - 1));
+      $('[data-proxima]', ctrl).addEventListener('click', () => mostrar(atual + 1));
+      botaoPausa.addEventListener('click', () => { ligado = !ligado; reiniciarBarra(); });
+
+      [lista, ctrl].forEach((el) => {
+        el.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') segurar('ponteiro', true); });
+        el.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') segurar('ponteiro', false); });
+      });
+      // Só o foco do teclado segura a troca; o clique nos botões não deixa a troca presa.
+      area.addEventListener('focusin', (e) => { if (e.target.matches(':focus-visible')) segurar('foco', true); });
+      area.addEventListener('focusout', (e) => { if (!area.contains(e.relatedTarget)) segurar('foco', false); });
+      document.addEventListener('visibilitychange', () => segurar('aba', document.hidden));
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(([e]) => segurar('fora', !e.isIntersecting), { threshold: 0.35 }).observe(lista);
+      } else {
+        motivos.delete('fora');
+      }
+      const aoMudarMovimento = () => { if (reduz.matches && ligado) { ligado = false; reiniciarBarra(); } };
+      if (reduz.addEventListener) reduz.addEventListener('change', aoMudarMovimento);
+
+      lista.classList.add('carrossel--ativo');
+      ctrl.hidden = false;
+      mostrar(0);
+    }
+  }
 })();
