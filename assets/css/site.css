@@ -220,9 +220,6 @@ html:not(.js-site) .so-com-js { display: none !important; }
 .hero__lead { margin-top: clamp(24px, 3vw, 36px); font-size: var(--t-media); max-width: 44ch; }
 .hero__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-8); margin-top: clamp(28px, 3.4vw, 44px); }
 .hero__acoes > a:not(.botao) { font-weight: 600; text-decoration-thickness: 1.5px; }
-.hero__credencial { display: flex; flex-wrap: wrap; gap: 6px 0; margin-top: clamp(36px, 4.4vw, 56px); padding-top: var(--space-6); border-top: 1px solid var(--linha); font-size: var(--t-menor); list-style: none; max-width: 580px; }
-.hero__credencial li { display: flex; align-items: center; }
-.hero__credencial li + li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--lilas-marca); margin-inline: 14px; }
 
 .hero__figura { position: relative; isolation: isolate; width: 100%; max-width: 500px; justify-self: end; margin: 0; }
 .hero__figura::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--arco); background: var(--pessego); transform: translate(7%, 5%); }
@@ -235,6 +232,32 @@ html:not(.js-site) .so-com-js { display: none !important; }
 }
 .hero__nome strong { font: 400 1.3125rem/1.15 var(--display); }
 .hero__nome span { font-size: var(--t-menor); line-height: 1.4; }
+.hero__nome strong + span { margin-top: 2px; }
+
+/* Computador: o hero inteiro cabe na primeira tela, abaixo do cabeçalho.
+ * O título e a foto encolhem pela altura da janela (svh, com vh de reserva) e o hero ocupa a tela toda. */
+@media (min-width: 900px) {
+  .hero {
+    --hero-pad: clamp(20px, 4vh, 56px);
+    --hero-alto: calc(100vh - var(--topo-altura) - 2 * var(--hero-pad));
+    display: grid; align-items: center;
+    min-height: calc(100vh - var(--topo-altura));
+    padding-block: var(--hero-pad);
+  }
+  @supports (height: 100svh) {
+    .hero {
+      --hero-pad: clamp(20px, 4svh, 56px);
+      --hero-alto: calc(100svh - var(--topo-altura) - 2 * var(--hero-pad));
+      min-height: calc(100svh - var(--topo-altura));
+    }
+  }
+  .hero__titulo { font-size: clamp(2.5rem, min(1.15rem + 4.7vw, var(--hero-alto) * 0.122), 5.75rem); }
+  .hero__olho { margin-bottom: clamp(12px, 2.4vh, 32px); }
+  .hero__lead { margin-top: clamp(16px, 3vh, 36px); max-width: 48ch; }
+  .hero__acoes { margin-top: clamp(20px, 3.6vh, 44px); }
+  /* foto 4:5 mais o deslocado em pêssego (5% da altura) dentro da altura livre */
+  .hero__figura { width: min(100%, 500px, var(--hero-alto) * 0.74); }
+}
 .hero__selo { position: absolute; top: 3%; right: -8%; width: clamp(112px, 10vw, 136px); aspect-ratio: 1; }
 .hero__selo svg { width: 100%; height: 100%; overflow: visible; }
 .hero__selo .disco { fill: var(--lilas-claro); }
@@ -248,10 +271,6 @@ html:not(.js-site) .so-com-js { display: none !important; }
   .hero__nome { left: -15%; bottom: 7%; padding: 12px 16px; }
   .hero__nome strong { font-size: 1.125rem; }
   .hero__selo { right: -14%; width: 100px; }
-}
-@media (max-width: 599px) {
-  .hero__credencial { flex-direction: column; }
-  .hero__credencial li + li::before { display: none; }
 }
 
 /* ---------- Faixa de garantias ---------- */
