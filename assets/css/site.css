@@ -629,8 +629,10 @@ ol.lista-pontos li::before { content: counter(item); top: 0; left: 0; width: 28p
 .texto figure { margin: var(--space-12) 0; max-width: 240px; }
 .texto figure .circulo { margin-bottom: var(--space-6); }
 figcaption { font-size: var(--t-menor); line-height: 1.5; }
-.galeria { display: flex; flex-wrap: wrap; gap: var(--space-8) clamp(32px, 4vw, 56px); margin: var(--space-12) 0; }
-.galeria figure { margin: 0; width: 210px; display: grid; gap: var(--space-6); align-content: start; }
+/* Galeria de fotos no meio do texto: todas na mesma linha, até 210 px cada; no celular encolhem juntas. */
+.galeria { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 210px); justify-content: start; gap: var(--space-8) clamp(16px, 4vw, 56px); margin: var(--space-12) 0; }
+.galeria figure { margin: 0; display: grid; gap: var(--space-6); align-content: start; }
+@media (max-width: 599px) { .galeria figure { gap: var(--space-3); } .galeria figcaption { font-size: 0.875rem; } }
 .citacoes { list-style: none; display: grid; gap: var(--space-4); margin-bottom: var(--space-6); }
 .citacoes li { padding: 24px 28px; background: var(--fundo); border-radius: var(--radius-md); }
 .citacoes blockquote { margin: 0 0 var(--space-3); }
