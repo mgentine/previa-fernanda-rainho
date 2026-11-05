@@ -333,24 +333,34 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 }
 
 /* ---------- Exames ao microscópio ---------- */
-.exames__lista { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(40px, 5vw, 72px); }
-.exame { display: grid; gap: var(--space-3); align-content: start; }
+/* Cada exame: foto, título, quando é feito, texto e link. No computador as três colunas dividem as mesmas
+ * linhas (subgrid): títulos, textos e links ficam alinhados mesmo com textos de tamanhos diferentes. */
+.exames__lista { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-12) clamp(40px, 5vw, 72px); }
+.exame { display: grid; gap: 0; align-content: start; }
 .exame__campo { width: min(100%, 280px); aspect-ratio: 1; border-radius: 50%; overflow: clip; margin: 11px 0 var(--space-8) 11px; outline: 1px solid var(--lilas-marca); outline-offset: 10px; background: var(--branco); }
 .exame__campo img { width: 100%; height: 100%; object-fit: cover; }
-.exame__quando { font-size: var(--t-menor); font-weight: 600; }
-.exame p:not(.exame__quando) { max-width: 38ch; }
-.exame__quando { margin-top: -6px; }
-.exame a { font-weight: 600; }
-.exames__mais { margin-top: clamp(48px, 5vw, 72px); display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-8); justify-content: space-between; align-items: center; }
-.exames__mais p { max-width: 70ch; }
+.exame h3 { margin: 0; }
+.exame__quando { margin-top: 4px; font-size: var(--t-menor); font-weight: 600; }
+.exame__texto { margin-top: var(--space-3); max-width: 36ch; line-height: 1.6; }
+.exame__link { margin-top: var(--space-4); align-self: end; }
+.exames__mais { margin-top: clamp(40px, 4.5vw, 64px); max-width: 72ch; }
+.exames__mais a { white-space: nowrap; }
+@media (min-width: 900px) {
+  @supports (grid-template-rows: subgrid) {
+    .exames__lista { grid-template-rows: repeat(5, auto); row-gap: 0; }
+    .exame { grid-row: span 5; grid-template-rows: subgrid; }
+  }
+}
 @media (max-width: 899px) {
   .exames__lista { grid-template-columns: 1fr; gap: var(--space-12); }
   .exame { grid-template-columns: 132px minmax(0, 1fr); column-gap: var(--space-8); }
-  .exame__campo { grid-row: span 4; width: 132px; margin: 8px 0 0 7px; outline-offset: 6px; }
+  .exame__campo { grid-row: span 5; width: 132px; margin: 8px 0 0 7px; outline-offset: 6px; }
+  .exame__link { align-self: start; }
 }
 @media (max-width: 479px) {
   .exame { grid-template-columns: 1fr; }
   .exame__campo { grid-row: auto; width: 168px; margin: 8px 0 var(--space-4) 8px; }
+  .exames__mais a { white-space: normal; }
 }
 
 /* ---------- A pele por dentro (chamada para a maquete 3D) ---------- */
