@@ -441,6 +441,8 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .depoimento blockquote { margin: 0; }
 .depoimento blockquote p { font: 400 1.3125rem/1.4 var(--display); }
 .depoimento[data-pos="1"] blockquote p { font-size: clamp(1.5rem, 1.2rem + 0.9vw, 2rem); line-height: 1.32; }
+/* avaliação longa no cartão grande: letra menor, para o cartão não crescer além da tela */
+.depoimento[data-pos="1"] .depoimento__item--longo blockquote p { font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.375rem); line-height: 1.42; }
 .depoimento p.depoimento__quem { display: grid; gap: 2px; font-size: var(--t-menor); }
 .depoimento__quem strong { font-size: 1rem; }
 .depoimento__texto { display: grid; gap: var(--space-3); justify-items: start; }
@@ -517,6 +519,7 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
   .depoimento blockquote p { font-size: clamp(1.1875rem, 9.3px + 1.48vh, 1.5rem); }
   .depoimento__texto { gap: clamp(8px, 1.4vh, 14px); }
   .depoimento[data-pos="1"] blockquote p { font-size: clamp(1.5rem, max(1.2rem + 0.9vw, 3.8vh), 2.375rem); }
+  .depoimento[data-pos="1"] .depoimento__item--longo blockquote p { font-size: clamp(1.25rem, 8px + 1.9vh, 1.75rem); }
   /* nome e origem na mesma linha */
   .depoimento p.depoimento__quem { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
   .depoimentos__rodape { margin-top: 0; }
