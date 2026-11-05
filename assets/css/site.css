@@ -319,7 +319,6 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
 .cuidado__corpo p + p { margin-top: 0; }
 .cuidado__corpo a, .perguntas .resposta a { font-weight: 600; display: inline-block; padding-block: 3px; }
 .cuidados__todos { margin-top: var(--space-8); }
-.cuidados__maquete { margin-top: var(--space-4); }
 .cuidados__palco { position: sticky; top: calc(var(--topo-altura) + 40px); }
 .cuidados__fotos { position: relative; width: 100%; max-width: 480px; margin-left: auto; isolation: isolate; }
 .cuidados__fotos::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--arco); background: var(--lilas-claro); transform: translate(-6%, 5%); }
@@ -353,6 +352,20 @@ details[open] > summary .mais::after { transform: translate(-50%, -50%) rotate(0
   .exame { grid-template-columns: 1fr; }
   .exame__campo { grid-row: auto; width: 168px; margin: 8px 0 var(--space-4) 8px; }
 }
+
+/* ---------- A pele por dentro (chamada para a maquete 3D) ---------- */
+/* Faixa em roxo: a imagem fixa da maquete abre de um recorte até a moldura inteira conforme a rolagem
+ * (data-janela, do movimento.js). O 3D em si só carrega na própria página. */
+.pele-dentro { background: var(--roxo-marca); color: var(--branco); }
+.pele-dentro .wrap { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(40px, 6vw, 104px); align-items: center; }
+.pele-dentro__texto { display: grid; gap: var(--space-6); justify-items: start; }
+.pele-dentro__texto > p { font-size: var(--t-media); max-width: 44ch; }
+.pele-dentro__texto > .pele-dentro__capitulos { font-size: var(--t-corpo); }
+.pele-dentro__texto > .pele-dentro__nota { font-size: var(--t-menor); }
+.pele-dentro__figura { margin: 0; }
+.pele-dentro__janela { aspect-ratio: 12 / 11; border-radius: var(--radius-lg); overflow: clip; background: var(--fundo); }
+.pele-dentro__janela img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 899px) { .pele-dentro .wrap { grid-template-columns: 1fr; } }
 
 /* ---------- Apresentação ---------- */
 .apresentacao .wrap { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); gap: clamp(48px, 8vw, 136px); align-items: start; }
