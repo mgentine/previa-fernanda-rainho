@@ -283,20 +283,37 @@
         etapa.appendChild(veu);
       }
     });
-    if (!(window.gsap && window.ScrollTrigger)) return;
-    window.gsap.registerPlugin(window.ScrollTrigger);
-    window.gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      etapas.forEach((etapa, i) => {
-        const proxima = etapas[i + 1];
-        if (!proxima) return;
-        const topo = parseFloat(getComputedStyle(proxima).top) || 0;
-        const tl = window.gsap.timeline({
-          scrollTrigger: { trigger: proxima, start: 'top bottom', end: () => 'top ' + (topo + 8) + 'px', scrub: true },
+    // Quando algum cartão não cabe na tela (celular pequeno ou deitado), os cartões deixam de grudar no alto
+    // (.pilha--solta) e o recuo fica desligado; volta a ligar se a tela crescer (girar o celular, por exemplo).
+    let recuo = null;
+    const ligarRecuo = () => {
+      if (recuo || !(window.gsap && window.ScrollTrigger)) return;
+      window.gsap.registerPlugin(window.ScrollTrigger);
+      recuo = window.gsap.matchMedia();
+      recuo.add('(prefers-reduced-motion: no-preference) and (min-height: 621px)', () => {
+        etapas.forEach((etapa, i) => {
+          const proxima = etapas[i + 1];
+          if (!proxima) return;
+          const topo = parseFloat(getComputedStyle(proxima).top) || 0;
+          const tl = window.gsap.timeline({
+            scrollTrigger: { trigger: proxima, start: 'top bottom', end: () => 'top ' + (topo + 8) + 'px', scrub: true },
+          });
+          tl.to(etapa, { scale: 0.94, ease: 'none' }, 0);
+          const veu = $('.pilha__veu', etapa);
+          if (veu) tl.to(veu, { opacity: 0.28, ease: 'none' }, 0);
         });
-        tl.to(etapa, { scale: 0.94, ease: 'none' }, 0);
-        const veu = $('.pilha__veu', etapa);
-        if (veu) tl.to(veu, { opacity: 0.28, ease: 'none' }, 0);
       });
-    });
+    };
+    const desligarRecuo = () => { if (recuo) { recuo.revert(); recuo = null; } };
+    const avaliar = () => {
+      const topo = $('.topo') ? $('.topo').getBoundingClientRect().height : 0;
+      const livre = window.innerHeight - topo - 16 - 14 * (etapas.length - 1) - 12;
+      const cabe = etapas.every((e) => e.offsetHeight <= livre);
+      pilha.classList.toggle('pilha--solta', !cabe);
+      if (cabe) ligarRecuo(); else desligarRecuo();
+    };
+    let espera;
+    window.addEventListener('resize', () => { clearTimeout(espera); espera = setTimeout(avaliar, 150); });
+    avaliar();
   });
 })();
