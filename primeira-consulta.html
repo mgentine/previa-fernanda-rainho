@@ -10,8 +10,8 @@
 <script>(function(r){r.classList.add('js');setTimeout(function(){if(!r.classList.contains('movimento-pronto'))r.classList.remove('js')},3000)})(document.documentElement)</script>
 <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/figtree-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=18">
-<link rel="stylesheet" href="assets/css/movimento.css?v=18">
+<link rel="stylesheet" href="assets/css/site.css?v=19">
+<link rel="stylesheet" href="assets/css/movimento.css?v=19">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -64,13 +64,34 @@
 <section class="corpo" data-secao>
   <div class="wrap">
     <div class="texto">
-      <h2 data-parte>Antes da consulta</h2>
-      <ul class="lista-pontos" data-parte>
-        <li><strong>Três dias sem banho.</strong> O banho recente remove escamas, crostas e micro-organismos que precisam ser examinados.</li>
-        <li><strong>Exames anteriores.</strong> Leve os exames que o pet já fez, mesmo os antigos.</li>
-        <li><strong>Medicamentos e produtos.</strong> Leve os nomes, as receitas ou as embalagens do que o pet já usou ou está usando.</li>
-        <li><strong>Fotos da evolução.</strong> Se tiver, mostre como as alterações começaram e mudaram.</li>
-      </ul>
+      <p class="pilha__intro" data-parte>A consulta acontece em três momentos. Role para ver cada um.</p>
+      <ol class="pilha" data-pilha aria-label="Os três momentos da primeira consulta">
+        <li class="pilha__etapa">
+          <div class="pilha__cabeca"><span class="pilha__numero" aria-hidden="true">1</span><h2>Antes da consulta</h2></div>
+          <ul class="lista-pontos">
+            <li><strong>Três dias sem banho.</strong> O banho recente remove escamas, crostas e micro-organismos que precisam ser examinados.</li>
+            <li><strong>Exames anteriores.</strong> Leve os exames que o pet já fez, mesmo os antigos.</li>
+            <li><strong>Medicamentos e produtos.</strong> Leve os nomes, as receitas ou as embalagens do que o pet já usou ou está usando.</li>
+            <li><strong>Fotos da evolução.</strong> Se tiver, mostre como as alterações começaram e mudaram.</li>
+          </ul>
+        </li>
+        <li class="pilha__etapa">
+          <div class="pilha__cabeca"><span class="pilha__numero" aria-hidden="true">2</span><h2>Durante a consulta</h2></div>
+          <p>A consulta dura em média uma hora. A Dra. Fernanda conversa sobre o histórico e a rotina do pet, faz o exame clínico da pele, do pelo e dos ouvidos e, conforme o caso, realiza exames na hora:</p>
+          <ul class="lista-pontos pilha__exames">
+            <li>Otoscopia clínica</li>
+            <li>Avaliação com lâmpada de Wood</li>
+            <li>Citologia de pele</li>
+            <li>Citologia de orelha</li>
+            <li>Raspado cutâneo</li>
+          </ul>
+          <p><a href="servicos.html#lampada-wood">Ver como a lâmpada de Wood funciona</a></p>
+        </li>
+        <li class="pilha__etapa">
+          <div class="pilha__cabeca"><span class="pilha__numero" aria-hidden="true">3</span><h2>Depois da consulta</h2></div>
+          <p>Você recebe a explicação do que foi encontrado e o plano de tratamento, com os próximos passos e os retornos combinados. Quando é preciso outro exame, como biópsia ou cultura, isso também é explicado.</p>
+        </li>
+      </ol>
       <div class="banho" id="banho" data-parte>
   <div class="banho__texto">
     <h3>Quando dar o último banho?</h3>
@@ -87,18 +108,7 @@
     <p class="banho__resultado" data-banho-resultado aria-live="polite">Escolha a data da consulta para ver o dia do último banho.</p>
   </form>
 </div>
-      <h2>Durante a consulta</h2>
-      <p>A consulta dura em média uma hora. A Dra. Fernanda conversa sobre o histórico e a rotina do pet, faz o exame clínico da pele, do pelo e dos ouvidos e, conforme o caso, realiza exames na hora:</p>
-      <ul class="lista-pontos">
-        <li>Otoscopia clínica</li>
-        <li>Avaliação com lâmpada de Wood</li>
-        <li>Citologia de pele</li>
-        <li>Citologia de orelha</li>
-        <li>Raspado cutâneo</li>
-      </ul>
       <div class="galeria" data-parte><figure><div class="circulo circulo--redondo"><div class="moldura"><img src="assets/img/micro-otodecica-560.webp" srcset="assets/img/micro-otodecica-900.webp 900w, assets/img/micro-otodecica-560.webp 560w" sizes="210px" width="900" height="900" alt="Ácaro Otodectes cynotis e ovos vistos ao microscópio" loading="lazy" decoding="async"></div></div><figcaption>Citologia de orelha ao microscópio.</figcaption></figure><figure><div class="circulo circulo--redondo circulo--icone"><div class="moldura"><img src="assets/img/micro-demodex-560.webp" srcset="assets/img/micro-demodex-796.webp 796w, assets/img/micro-demodex-560.webp 560w" sizes="210px" width="796" height="796" alt="Ácaro Demodex visto ao microscópio" loading="lazy" decoding="async"></div></div><figcaption>Raspado de pele ao microscópio.</figcaption></figure></div>
-      <h2>Depois da consulta</h2>
-      <p>Você recebe a explicação do que foi encontrado e o plano de tratamento, com os próximos passos e os retornos combinados. Quando é preciso outro exame, como biópsia ou cultura, isso também é explicado.</p>
       <h2>Valor e pagamento</h2>
       <p>O valor da consulta e as formas de pagamento são informados no agendamento, pelo WhatsApp.</p>
     </div>
@@ -156,7 +166,7 @@
 </footer>
 <script defer src="assets/js/vendor/gsap.min.js"></script>
 <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
-<script defer src="assets/js/movimento.js?v=18"></script>
-<script defer src="assets/js/site.js?v=18"></script>
+<script defer src="assets/js/movimento.js?v=19"></script>
+<script defer src="assets/js/site.js?v=19"></script>
 </body>
 </html>

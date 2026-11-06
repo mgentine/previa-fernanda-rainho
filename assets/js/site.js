@@ -222,4 +222,81 @@
       mostrar(0);
     }
   }
+
+  /* ---------- Lente (revelação no toque) ---------- */
+  // Duas imagens alinhadas da mesma área; a de cima ([data-lente-topo]) aparece só dentro do círculo, que segue
+  // o mouse ou o dedo. Setas do teclado movem a lente (Shift para passo maior). O botão [data-lente-tudo="id"]
+  // mostra a segunda imagem inteira. Não depende de biblioteca. Adaptado do módulo testado em 05/11/2026.
+  $$('[data-lente]').forEach((caixa) => {
+    const botao = caixa.id ? $(`[data-lente-tudo="${caixa.id}"]`) : null;
+    const textoAbrir = botao ? botao.textContent : '';
+    const textoFechar = botao ? (botao.getAttribute('data-texto-fechar') || 'Voltar para a lente') : '';
+    let pos = null;
+    const mover = (x, y) => {
+      const r = caixa.getBoundingClientRect();
+      pos = { x: Math.max(0, Math.min(r.width, x)), y: Math.max(0, Math.min(r.height, y)) };
+      caixa.style.setProperty('--x', pos.x + 'px');
+      caixa.style.setProperty('--y', pos.y + 'px');
+      caixa.classList.add('lente--usada');
+    };
+    const doPonteiro = (e) => { const r = caixa.getBoundingClientRect(); mover(e.clientX - r.left, e.clientY - r.top); };
+    const inteira = (ligar) => {
+      caixa.classList.toggle('lente--inteira', ligar);
+      caixa.classList.add('lente--usada');
+      if (botao) { botao.setAttribute('aria-pressed', String(ligar)); botao.textContent = ligar ? textoFechar : textoAbrir; }
+    };
+    if (!caixa.hasAttribute('tabindex')) caixa.tabIndex = 0;
+    caixa.addEventListener('pointerdown', (e) => {
+      if (caixa.classList.contains('lente--inteira')) inteira(false);
+      try { caixa.setPointerCapture(e.pointerId); } catch (erro) { /* navegador sem captura: segue sem ela */ }
+      doPonteiro(e);
+    });
+    caixa.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'mouse' || caixa.hasPointerCapture(e.pointerId)) doPonteiro(e);
+    });
+    caixa.addEventListener('keydown', (e) => {
+      const passo = e.shiftKey ? 64 : 24;
+      const d = { ArrowLeft: [-passo, 0], ArrowRight: [passo, 0], ArrowUp: [0, -passo], ArrowDown: [0, passo] }[e.key];
+      if (!d) return;
+      e.preventDefault();
+      const r = caixa.getBoundingClientRect();
+      const atual = pos || { x: r.width * 0.58, y: r.height * 0.46 };
+      mover(atual.x + d[0], atual.y + d[1]);
+    });
+    if (botao) {
+      botao.setAttribute('aria-pressed', 'false');
+      botao.addEventListener('click', () => inteira(!caixa.classList.contains('lente--inteira')));
+    }
+  });
+
+  /* ---------- Cartões que se empilham (sobreposição) ---------- */
+  // O empilhamento é position: sticky (funciona sem script). Aqui: o degrau entre cartões (--i), o véu e, com
+  // movimento normal e GSAP disponível, o cartão de baixo recua para 94% e escurece quando o seguinte chega.
+  $$('[data-pilha]').forEach((pilha) => {
+    const etapas = Array.from(pilha.children);
+    etapas.forEach((etapa, i) => {
+      etapa.style.setProperty('--i', i);
+      if (i < etapas.length - 1 && !$('.pilha__veu', etapa)) {
+        const veu = document.createElement('span');
+        veu.className = 'pilha__veu';
+        veu.setAttribute('aria-hidden', 'true');
+        etapa.appendChild(veu);
+      }
+    });
+    if (!(window.gsap && window.ScrollTrigger)) return;
+    window.gsap.registerPlugin(window.ScrollTrigger);
+    window.gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+      etapas.forEach((etapa, i) => {
+        const proxima = etapas[i + 1];
+        if (!proxima) return;
+        const topo = parseFloat(getComputedStyle(proxima).top) || 0;
+        const tl = window.gsap.timeline({
+          scrollTrigger: { trigger: proxima, start: 'top bottom', end: () => 'top ' + (topo + 8) + 'px', scrub: true },
+        });
+        tl.to(etapa, { scale: 0.94, ease: 'none' }, 0);
+        const veu = $('.pilha__veu', etapa);
+        if (veu) tl.to(veu, { opacity: 0.28, ease: 'none' }, 0);
+      });
+    });
+  });
 })();

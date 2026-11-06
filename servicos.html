@@ -10,8 +10,8 @@
 <script>(function(r){r.classList.add('js');setTimeout(function(){if(!r.classList.contains('movimento-pronto'))r.classList.remove('js')},3000)})(document.documentElement)</script>
 <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/figtree-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=18">
-<link rel="stylesheet" href="assets/css/movimento.css?v=18">
+<link rel="stylesheet" href="assets/css/site.css?v=19">
+<link rel="stylesheet" href="assets/css/movimento.css?v=19">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -74,21 +74,34 @@
   <div class="wrap">
     <div class="grupo__cabeca"><h2 id="t-exames" data-parte>Exames na consulta</h2><p class="grupo__intro" data-parte>Feitos durante o atendimento, com o resultado discutido na hora.</p>
       <div class="grupo__foto"><div class="circulo circulo--pessego" data-parte><div class="moldura"><img src="assets/img/arco-otoscopio-spitz-560.webp" srcset="assets/img/arco-otoscopio-spitz-852.webp 852w, assets/img/arco-otoscopio-spitz-560.webp 560w" sizes="190px" width="852" height="1065" alt="Dra. Fernanda Rainho examinando a orelha de um spitz alemão com otoscópio" loading="lazy" decoding="async"></div></div></div></div>
-    <ul class="servicos"><li data-parte><h3>Otoscopia clínica</h3><p>Exame do canal do ouvido com otoscópio, para ver inflamação, secreção e corpos estranhos.</p></li><li data-parte><h3>Lâmpada de Wood</h3><p>Luz ultravioleta que ajuda a triar alguns fungos causadores de dermatofitose.</p></li><li data-parte><h3>Citologia de pele</h3><p>Amostra da superfície da pele vista ao microscópio, para identificar bactérias, leveduras como a <i>Malassezia</i> e células inflamatórias.</p></li><li data-parte><h3>Citologia de orelha</h3><p>Amostra do ouvido vista ao microscópio, para identificar fungos, bactérias e ácaros.</p></li><li data-parte><h3>Raspado cutâneo</h3><p>Raspagem leve da pele para procurar ácaros, como os da sarna e da demodicose.</p></li></ul>
+    <div class="grupo__conteudo"><ul class="servicos"><li data-parte><h3>Otoscopia clínica</h3><p>Exame do canal do ouvido com otoscópio, para ver inflamação, secreção e corpos estranhos.</p></li><li data-parte><h3>Lâmpada de Wood</h3><p>Luz ultravioleta que ajuda a triar alguns fungos causadores de dermatofitose.</p></li><li data-parte><h3>Citologia de pele</h3><p>Amostra da superfície da pele vista ao microscópio, para identificar bactérias, leveduras como a <i>Malassezia</i> e células inflamatórias.</p></li><li data-parte><h3>Citologia de orelha</h3><p>Amostra do ouvido vista ao microscópio, para identificar fungos, bactérias e ácaros.</p></li><li data-parte><h3>Raspado cutâneo</h3><p>Raspagem leve da pele para procurar ácaros, como os da sarna e da demodicose.</p></li></ul>
+      <div class="wood" id="lampada-wood" data-parte>
+        <h3>Como a lâmpada de Wood ajuda</h3>
+        <p>Com a sala escurecida, a lâmpada ilumina a pele e o pelo com luz ultravioleta. Sob essa luz, os pelos atacados por cerca de metade das cepas de <i>Microsporum canis</i>, um dos fungos da dermatofitose, brilham em verde. Como nem todo fungo brilha, o diagnóstico se completa com tricograma e cultura fúngica.</p>
+        <figure class="wood__figura">
+          <div class="lente" id="lente-wood" data-lente role="group" aria-label="Ilustração da pele com pelos, alguns quebrados e envoltos por fungo. Dentro do círculo, a mesma pele sob a lâmpada de Wood, com os pelos atacados brilhando em verde. Use as setas do teclado para mover o círculo.">
+            <img src="assets/img/wood-luz-comum-1000.webp" srcset="assets/img/wood-luz-comum-600.webp 600w, assets/img/wood-luz-comum-1000.webp 1000w" sizes="(min-width: 760px) 560px, calc(100vw - 32px)" width="1000" height="1000" alt="" loading="lazy" decoding="async">
+            <img data-lente-topo src="assets/img/wood-lampada-1000.webp" srcset="assets/img/wood-lampada-600.webp 600w, assets/img/wood-lampada-1000.webp 1000w" sizes="(min-width: 760px) 560px, calc(100vw - 32px)" width="1000" height="1000" alt="" loading="lazy" decoding="async">
+            <span class="lente__dica" data-lente-dica aria-hidden="true">Arraste a lente</span>
+          </div>
+          <figcaption>Ilustração feita com a maquete 3D do site, não é foto de paciente. Fora do círculo, a pele com luz comum; dentro, sob a lâmpada de Wood. Na ilustração todos os pelos atacados brilham; na pele real, depende do fungo.</figcaption>
+        </figure>
+        <p class="wood__acoes"><button class="botao botao--contorno" type="button" data-lente-tudo="lente-wood" aria-controls="lente-wood" data-texto-fechar="Voltar para a lente">Ver a pele inteira sob a lâmpada</button> <a href="doencas-de-pele.html#dermatofitose">Ver a dermatofitose na maquete</a></p>
+      </div></div>
   </div>
 </section>
 <section class="grupo" id="outros-exames" data-secao aria-labelledby="t-outros-exames">
   <div class="wrap">
     <div class="grupo__cabeca"><h2 id="t-outros-exames" data-parte>Outros exames</h2><p class="grupo__intro" data-parte>Indicados conforme o caso.</p>
       <div class="grupo__foto"><div class="circulo circulo--redondo circulo--icone" data-parte><div class="moldura"><img src="assets/img/micro-tricograma-550.webp" srcset="assets/img/micro-tricograma-550.webp 550w" sizes="190px" width="550" height="550" alt="Pelos vistos ao microscópio em um tricograma" loading="lazy" decoding="async"></div></div></div></div>
-    <ul class="servicos"><li data-parte><h3>Tricograma</h3><p>Pelos observados ao microscópio para avaliar raiz e haste, útil em queda de pelo e alopecia X. <a href="dica-tricograma.html">Ler sobre o tricograma</a></p></li><li data-parte><h3>Biópsia de pele</h3><p>Pequenos fragmentos de pele enviados para exame histopatológico, quando é preciso confirmar o diagnóstico.</p></li><li data-parte><h3>Cultura fúngica e bacteriana</h3><p>Identifica o fungo ou a bactéria envolvidos. A cultura bacteriana pode vir com antibiograma, que orienta a escolha do antibiótico.</p></li></ul>
+    <div class="grupo__conteudo"><ul class="servicos"><li data-parte><h3>Tricograma</h3><p>Pelos observados ao microscópio para avaliar raiz e haste, útil em queda de pelo e alopecia X. <a href="dica-tricograma.html">Ler sobre o tricograma</a></p></li><li data-parte><h3>Biópsia de pele</h3><p>Pequenos fragmentos de pele enviados para exame histopatológico, quando é preciso confirmar o diagnóstico.</p></li><li data-parte><h3>Cultura fúngica e bacteriana</h3><p>Identifica o fungo ou a bactéria envolvidos. A cultura bacteriana pode vir com antibiograma, que orienta a escolha do antibiótico.</p></li></ul></div>
   </div>
 </section>
 <section class="grupo" id="tratamentos" data-secao aria-labelledby="t-tratamentos">
   <div class="wrap">
     <div class="grupo__cabeca"><h2 id="t-tratamentos" data-parte>Tratamentos e acompanhamento</h2><p class="grupo__intro" data-parte>Cada plano é montado depois da avaliação.</p>
       <div class="grupo__foto"><div class="circulo" data-parte><div class="moldura"><img src="assets/img/arco-poltrona-spitz-amplo-560.webp" srcset="assets/img/arco-poltrona-spitz-amplo-852.webp 852w, assets/img/arco-poltrona-spitz-amplo-560.webp 560w" sizes="190px" width="852" height="1065" alt="Dra. Fernanda Rainho sentada em uma poltrona com um spitz alemão no colo" loading="lazy" decoding="async"></div></div></div></div>
-    <ul class="servicos"><li data-parte><h3>Tratamento de otites</h3><p>Controle da inflamação e da infecção do ouvido e busca da causa que faz a otite voltar. <a href="alergias-e-otites.html">Alergias e otites</a></p></li><li data-parte><h3>Dermatite atópica e alergias</h3><p>Acompanhamento com retornos para ajustar o tratamento e manter a coceira sob controle ao longo do tempo. <a href="dica-dermatite-atopica.html">Ler sobre dermatite atópica</a></p></li><li data-parte><h3>Investigação de alergia alimentar</h3><p>Dieta de eliminação orientada e acompanhada, seguida da reintrodução do alimento para confirmar o diagnóstico.</p></li><li data-parte><h3>Fotobiomodulação</h3><p>Luz de baixa intensidade aplicada sobre a lesão, que pode auxiliar na cicatrização e no controle da inflamação. <a href="feridas.html">Feridas</a></p></li><li data-parte><h3>Terapia fotodinâmica</h3><p>Substância fotossensibilizante combinada com luz, com ação contra bactérias e fungos, como apoio no tratamento de feridas e infecções de pele. <a href="feridas.html">Feridas</a></p></li><li data-parte><h3>Microagulhamento e peeling de diamante</h3><p>Técnicas que estimulam a pele e podem auxiliar no crescimento dos pelos em casos de alopecia X. <a href="alopecia-x.html">Alopecia X</a></p></li></ul>
+    <div class="grupo__conteudo"><ul class="servicos"><li data-parte><h3>Tratamento de otites</h3><p>Controle da inflamação e da infecção do ouvido e busca da causa que faz a otite voltar. <a href="alergias-e-otites.html">Alergias e otites</a></p></li><li data-parte><h3>Dermatite atópica e alergias</h3><p>Acompanhamento com retornos para ajustar o tratamento e manter a coceira sob controle ao longo do tempo. <a href="dica-dermatite-atopica.html">Ler sobre dermatite atópica</a></p></li><li data-parte><h3>Investigação de alergia alimentar</h3><p>Dieta de eliminação orientada e acompanhada, seguida da reintrodução do alimento para confirmar o diagnóstico.</p></li><li data-parte><h3>Fotobiomodulação</h3><p>Luz de baixa intensidade aplicada sobre a lesão, que pode auxiliar na cicatrização e no controle da inflamação. <a href="feridas.html">Feridas</a></p></li><li data-parte><h3>Terapia fotodinâmica</h3><p>Substância fotossensibilizante combinada com luz, com ação contra bactérias e fungos, como apoio no tratamento de feridas e infecções de pele. <a href="feridas.html">Feridas</a></p></li><li data-parte><h3>Microagulhamento e peeling de diamante</h3><p>Técnicas que estimulam a pele e podem auxiliar no crescimento dos pelos em casos de alopecia X. <a href="alopecia-x.html">Alopecia X</a></p></li></ul></div>
   </div>
 </section>
 <section class="chamada" data-secao>
@@ -133,7 +146,7 @@
 </footer>
 <script defer src="assets/js/vendor/gsap.min.js"></script>
 <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
-<script defer src="assets/js/movimento.js?v=18"></script>
-<script defer src="assets/js/site.js?v=18"></script>
+<script defer src="assets/js/movimento.js?v=19"></script>
+<script defer src="assets/js/site.js?v=19"></script>
 </body>
 </html>

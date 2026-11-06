@@ -665,6 +665,29 @@ ol.lista-pontos li { counter-increment: item; padding-left: 42px; }
 ol.lista-pontos li::before { content: counter(item); top: 0; left: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--lilas-claro); font: 600 var(--t-menor)/28px var(--sans); text-align: center; }
 .destaque { background: var(--lilas-claro); border-radius: var(--radius-md); padding: 22px 26px; }
 .texto figure { margin: var(--space-12) 0; max-width: 240px; }
+
+/* ---------- Primeira consulta: antes, durante e depois em cartões que se empilham ao rolar ---------- */
+/* position: sticky faz o empilhamento sem script; o site.js define o degrau (--i), cria o véu e faz o cartão de
+ * baixo recuar e escurecer quando o seguinte chega (só com movimento normal). */
+.pilha__intro { font-size: var(--t-media); }
+.texto > ol.pilha { list-style: none; max-width: none; margin: var(--space-6) 0 var(--space-12); padding: 0; display: grid; gap: var(--space-6); }
+.pilha__etapa {
+  position: sticky; top: calc(var(--topo-altura) + 16px + var(--i, 0) * 14px);
+  min-height: min(52svh, 380px); padding: clamp(24px, 3.4vw, 40px); border-radius: var(--radius-lg);
+  display: grid; align-content: start; gap: var(--space-4); overflow: hidden; transform-origin: 50% 0;
+  background: var(--fundo); color: var(--texto);
+}
+.pilha__etapa:nth-child(2) { background: var(--lilas-claro); }
+.pilha__etapa:nth-child(3) { background: var(--roxo-marca); color: var(--branco); }
+.pilha__etapa:nth-child(3) a { color: var(--branco); }
+.pilha__etapa > * { position: relative; margin: 0; }
+.pilha__cabeca { display: flex; align-items: baseline; gap: 14px; }
+.pilha__numero { font: 400 clamp(2.75rem, 2.2rem + 1.8vw, 4rem)/0.9 var(--display); letter-spacing: -0.02em; font-variant-numeric: lining-nums; }
+.pilha__etapa h2 { font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem); margin: 0; }
+.pilha__etapa .lista-pontos { margin: 0; }
+.pilha__exames { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px var(--space-6); }
+@media (max-width: 479px) { .pilha__exames { grid-template-columns: 1fr; } }
+.pilha__veu { position: absolute !important; inset: 0; background: #2f2236; opacity: 0; pointer-events: none; }
 .texto figure .circulo { margin-bottom: var(--space-6); }
 figcaption { font-size: var(--t-menor); line-height: 1.5; }
 /* Galeria de fotos no meio do texto: todas na mesma linha, até 210 px cada; no celular encolhem juntas. */
@@ -706,6 +729,42 @@ figcaption { font-size: var(--t-menor); line-height: 1.5; }
 .grupo__bloco a { font-weight: 600; }
 @media (max-width: 599px) { .grupo__bloco { grid-template-columns: 1fr; } }
 .servicos { list-style: none; }
+.grupo__conteudo { min-width: 0; }
+
+/* ---------- Lâmpada de Wood: lente que mostra a mesma pele sob a lâmpada (efeito "revelação no toque") ---------- */
+.wood { margin-top: clamp(40px, 5vw, 64px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--linha); display: grid; gap: var(--space-4); }
+.wood h3 { font-size: var(--t-h3); }
+.wood > p { max-width: 62ch; }
+.wood__figura { margin: var(--space-4) 0 0; max-width: 560px; display: grid; gap: var(--space-3); }
+.wood__figura figcaption { font-size: var(--t-menor); max-width: 56ch; }
+.wood__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-6); }
+.lente {
+  --x: 58%; --y: 46%; --r: 84px;
+  position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: var(--radius-lg);
+  background: var(--fundo); touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none;
+}
+@media (min-width: 720px) { .lente { --r: 112px; } }
+.lente img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; }
+/* sem script, a segunda imagem fica escondida e a primeira aparece inteira */
+.lente [data-lente-topo] { display: none; }
+.js .lente [data-lente-topo] { display: block; clip-path: circle(var(--r) at var(--x) var(--y)); }
+.js .lente::after {
+  content: ""; position: absolute; left: var(--x); top: var(--y); width: calc(var(--r) * 2); height: calc(var(--r) * 2);
+  transform: translate(-50%, -50%); border: 3px solid var(--branco); border-radius: 50%; pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(57, 40, 66, 0.35);
+}
+.lente.lente--inteira [data-lente-topo] { clip-path: circle(150% at 50% 50%); }
+.lente.lente--inteira::after { opacity: 0; }
+.lente:focus-visible { outline: 3px solid var(--texto); outline-offset: 3px; }
+.lente__dica {
+  display: none; position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); padding: 8px 14px; border-radius: 999px;
+  background: rgba(57, 40, 66, 0.88); color: var(--branco); font-size: var(--t-menor); font-weight: 600; white-space: nowrap; pointer-events: none;
+  transition: opacity 240ms ease;
+}
+.js .lente__dica { display: block; }
+.lente.lente--usada .lente__dica { opacity: 0; }
+html:not(.js) [data-lente-tudo] { display: none; }
+@media (prefers-reduced-motion: reduce) { .lente__dica { transition: none; } }
 .servicos li { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-3) var(--space-8); padding: 26px 0; border-top: 1px solid var(--linha); }
 .servicos li:first-child { border-top: 0; padding-top: 0; }
 .servicos h3 { font-size: var(--t-h3); }
