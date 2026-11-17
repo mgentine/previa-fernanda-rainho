@@ -879,15 +879,21 @@ html:not(.js) [data-lente-tudo] { display: none; }
  * No computador, o texto ficou mais longo: a coluna de texto fica um pouco mais larga
  * e o título encolhe pela altura da janela, para o hero continuar cabendo numa tela. */
 .hero__lead + .hero__lead { margin-top: .5em; }
+/* Primeiro parágrafo sem o ajuste de "pretty" (que puxava uma palavra a mais para a última linha);
+ * o segundo, de duas linhas, fica equilibrado, sem palavra solta no fim. */
+.hero__lead { text-wrap: wrap; }
+.hero__lead + .hero__lead { text-wrap: balance; }
+/* O título também é limitado pela largura da coluna (10,5% dela, em cqi): "Para uma pele saudável."
+ * mede 9,3 vezes o tamanho da letra, e assim cada frase fica sempre numa linha só. */
 @media (min-width: 900px) {
+  .hero__texto { container-type: inline-size; }
   .hero__lead { max-width: 54ch; }
-  .hero__lead + .hero__lead { margin-top: .5em; }
-  .hero__titulo { font-size: clamp(2.5rem, min(1.15rem + 4.7vw, var(--hero-alto) * 0.108), 5.75rem); }
+  .hero__titulo { font-size: clamp(2.5rem, min(1.15rem + 4.7vw, var(--hero-alto) * 0.108, 10.5cqi), 5.75rem); }
 }
 /* Computador estreito (900 a 1199 px): menos espaço entre texto e foto e título um pouco menor. */
 @media (min-width: 900px) and (max-width: 1199px) {
   .hero .wrap { gap: 40px; }
-  .hero__titulo { font-size: clamp(2.5rem, min(1.15rem + 4.2vw, var(--hero-alto) * 0.108), 5.75rem); }
+  .hero__titulo { font-size: clamp(2.5rem, min(1.15rem + 4.2vw, var(--hero-alto) * 0.108, 10.5cqi), 5.75rem); }
 }
 @media (min-width: 900px) and (max-width: 1199px) and (max-height: 820px) {
   .hero__lead { font-size: 1.0625rem; margin-top: clamp(12px, 2.2vh, 24px); }
