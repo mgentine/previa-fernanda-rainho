@@ -874,3 +874,22 @@ html:not(.js) [data-lente-tudo] { display: none; }
   .topo, .menu-movel, .rodape__links, .agenda, .chamada, .so-com-js { display: none !important; }
   body { font-size: 11pt; }
 }
+
+/* Texto do hero em dois parágrafos (pedido da Dra. Fernanda, 17/11/2026).
+ * No computador, o texto ficou mais longo: a coluna de texto fica um pouco mais larga
+ * e o título encolhe pela altura da janela, para o hero continuar cabendo numa tela. */
+.hero__lead + .hero__lead { margin-top: .5em; }
+@media (min-width: 900px) {
+  .hero__lead { max-width: 54ch; }
+  .hero__lead + .hero__lead { margin-top: .5em; }
+  .hero__titulo { font-size: clamp(2.5rem, min(1.15rem + 4.7vw, var(--hero-alto) * 0.108), 5.75rem); }
+}
+/* Computador estreito (900 a 1199 px): menos espaço entre texto e foto e título um pouco menor. */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .hero .wrap { gap: 40px; }
+  .hero__titulo { font-size: clamp(2.5rem, min(1.15rem + 4.2vw, var(--hero-alto) * 0.108), 5.75rem); }
+}
+@media (min-width: 900px) and (max-width: 1199px) and (max-height: 820px) {
+  .hero__lead { font-size: 1.0625rem; margin-top: clamp(12px, 2.2vh, 24px); }
+  .hero__acoes { margin-top: clamp(16px, 2.6vh, 28px); }
+}
